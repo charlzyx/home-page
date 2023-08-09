@@ -14,7 +14,7 @@ export default function HomePage({ fallback }: Record<string, any>) {
     <SWRConfig value={{ fallback }}>
       <Head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <title>BQ Center</title>
+        <title>Home</title>
       </Head>
       <Header />
       <DataCenter />

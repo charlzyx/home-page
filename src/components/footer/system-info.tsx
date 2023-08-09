@@ -1,37 +1,85 @@
 import useSWR from 'swr';
 
 import { fetcher } from 'src/lib/fetcher';
-import type { MemoryInfoResponse, CpuInfoResponse } from 'src/types/system';
+// import type { MemoryInfoResponse, CpuInfoResponse, FullInfoResponse } from 'src/types/system';
+import type { FullInfoResponse } from 'src/types/system';
 
-function CpuInfo() {
-  const { data, error } = useSWR<CpuInfoResponse>('/api/system/cpuinfo', fetcher, { refreshInterval: 1000 });
-  if (error) return null;
+// function CpuInfo() {
+//   const { data, error } = useSWR<CpuInfoResponse>('/api/system/cpuinfo', fetcher, { refreshInterval: 1000 });
+//   if (error) return null;
 
-  return (
-    <div className="flex items-center">
-      <div className="i-carbon:chip text-4 mr-3" />
-      <div>{data?.usage} Usage</div>
-    </div>
-  );
-}
+//   return (
+//     <div className="flex items-center">
+//       <div className="i-carbon:chip text-4 mr-3" />
+//       <div>{data?.usage} Usage</div>
+//     </div>
+//   );
+// }
 
-function MemInfo() {
-  const { data, error } = useSWR<MemoryInfoResponse>('/api/system/meminfo', fetcher, { refreshInterval: 1000 });
-  if (error) return null;
+// function MemInfo() {
+//   const { data, error } = useSWR<MemoryInfoResponse>('/api/system/meminfo', fetcher, { refreshInterval: 1000 });
+//   if (error) return null;
 
-  return (
-    <div className="flex items-center">
-      <svg className="mr-3" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 640 512" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z" /></svg>
-      <div>{data?.free} Free</div>
-    </div>
-  );
-}
+//   return (
+//     <div className="flex items-center">
+//       <div className="i-carbon:activy text-4 mr-3" />
+//       <div>{data?.free} Free</div>
+//     </div>
+//   );
+// }
 
-export default function SystemInfo() {
+const units = ['b', 'KB', 'MB', 'GB', 'TB'];
+const readable = (x: number, toFixed = 2) => {
+  let n = x;
+
+  let uidx = 0;
+  while (n > 1024) {
+    n = n / 1024;
+    uidx++;
+  }
+  return n.toFixed(toFixed) + units[uidx];
+};
+
+const shortnet = (x: string) => x.split('.').map(x => parseInt(x, 10).toString(2)).join().split('').filter(x => x === '1').length;
+
+export default function SystemIno() {
+  const { data, error } = useSWR<FullInfoResponse>('/api/system/all', fetcher, { refreshInterval: 6666 });
+  if (error || !data) return null;
+  const { cpu, system, mem, network, fs } = data;
+
   return (
     <div className="children:mb-2">
-      <CpuInfo />
-      <MemInfo />
+      <div className="flex items-top">
+        <div className="i-carbon:chip text-4 mr-3" />
+        <div>{cpu.usage} {system.manufacturer}&reg; {cpu.manufacturer}&reg; {cpu.speed}GHz/{cpu.cores}Cores</div>
+      </div>
+      <div className="flex items-center">
+        <div className="i-carbon:chart-line text-4 mr-3" />
+        <div>{(mem.free / mem.total * 100).toFixed(2)}% {readable(mem.free)}/{readable(mem.total)}</div>
+      </div>
+
+      <div className="flex items-center">
+        <div className="i-carbon:server-dns text-4 mr-3" />
+        <div>{
+          network.filter(x => /en|eth/.test(x.iface) && x.ip4).map(n => <div key={n.ip6}>{n.iface}:{n.ip4}/{shortnet(n.ip4subnet)}</div>)
+        } </div>
+      </div>
+
+      <div className="flex items-top">
+        <div className="i-carbon:data-base text-4 mr-3" />
+        <div>{
+          fs
+            .filter(f => f.mount.includes('titan/'))
+            .map(f => {
+              return (
+                <div key={f.mount}>
+                  {f.use}% {f.mount} {readable(f.available, 1)}/{readable(f.size, 1)}
+                </div>
+              );
+            })
+        }
+        </div>
+      </div>
     </div>
   );
 
