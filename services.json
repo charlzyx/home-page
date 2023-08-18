@@ -1,10 +1,24 @@
 [
   {
+    "name": "alist",
+    "description": "☁️ × 本地网盘",
+    "path": "http://alist.home.com",
+    "icon": "network-overlay",
+    "oldName": "alist"
+  },
+  {
     "name": "xunlei",
     "description": "迅雷NAS版",
     "icon": "lightning",
     "path": "http://xl.home.com",
     "oldName": "NASxunlei"
+  },
+  {
+    "name": "tplogin",
+    "description": "TP-Link",
+    "path": "http://192.168.6.66",
+    "icon": "wifi",
+    "oldName": "tplogin"
   },
   {
     "name": "SpeedTest",
@@ -28,18 +42,11 @@
     "oldName": "Docker"
   },
   {
-    "name": "Clash",
-    "description": "出海海淘淘气",
-    "path": "http://yacd.home.com",
-    "icon": "tennis-ball",
-    "oldName": "Clash"
-  },
-  {
-    "name": "PVE DNS",
-    "description": "还是 AdGuardHome",
-    "path": "http://192.168.6.6:5233",
-    "icon": "link",
-    "oldName": "adns"
+    "name": "网关Gateway",
+    "description": "ADB/DHCP/DNS",
+    "path": "http://adg.home.com",
+    "icon": "security",
+    "oldName": "网关Gateway"
   },
   {
     "name": "sftpgo",
@@ -56,24 +63,17 @@
     "oldName": "jellyfin"
   },
   {
-    "name": "alist",
-    "description": "☁️ × 本地网盘",
-    "path": "http://alist.home.com",
-    "icon": "network-overlay",
-    "oldName": "alist"
+    "name": "Clash",
+    "description": "出海海淘淘气",
+    "path": "http://yacd.home.com",
+    "icon": "tennis-ball",
+    "oldName": "Clash"
   },
   {
-    "name": "tplogin",
-    "description": "TP-Link",
-    "path": "http://192.168.6.66",
-    "icon": "wifi",
-    "oldName": "tplogin"
-  },
-  {
-    "name": "网关Gateway",
-    "description": "ADB/DHCP/DNS",
-    "path": "http://adg.home.com",
-    "icon": "security",
-    "oldName": "网关Gateway"
+    "name": "PVE DNS",
+    "description": "还是 AdGuardHome",
+    "path": "http://192.168.6.6:5233",
+    "icon": "link",
+    "oldName": "adns"
   }
 ]

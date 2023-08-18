@@ -5,7 +5,7 @@ import Hitokoto from '../hitokoto';
 import ServiceCard from '../service-card';
 import { SortableContainer, arrayMove, SortableElement } from 'react-sortable-hoc';
 import { useServices } from 'src/hooks/use-services';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import useSWR from 'swr';
 import { fetcher } from 'src/lib/fetcher';
@@ -43,20 +43,26 @@ const SortableCard = SortableElement((props: React.ComponentProps<typeof Service
 });
 
 export default function DataCenter() {
-  const { servicesData } = useServices();
+  const { servicesData, update } = useServices();
   const { handleUpdateServices } = useEditServices();
   // docker 动态加载 env
   const { data } = useSWR<Env>('/api/env', fetcher);
   const [services, setServices] = useState(servicesData || []);
+  const updating = useRef(false);
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
     const neo = arrayMove(services, oldIndex, newIndex);
     setServices(neo);
-    handleUpdateServices(services);
+    updating.current = true;
+    handleUpdateServices(neo).then(update).finally(() => {
+      setTimeout(() => {
+        updating.current = false;
+      }, 300);
+    });
   };
 
   useEffect(() => {
-    if (!servicesData || servicesData.length === 0) return;
+    if (updating.current || !servicesData || servicesData.length === 0) return;
     if (JSON.stringify(services) !== JSON.stringify(servicesData))
       setServices(servicesData);
   }, [handleUpdateServices, services, servicesData]);
