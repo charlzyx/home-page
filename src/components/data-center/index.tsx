@@ -3,14 +3,16 @@ import { Loading } from '@geist-ui/core';
 import Footer from '../footer';
 import Hitokoto from '../hitokoto';
 import ServiceCard from '../service-card';
-
+import { SortableContainer, arrayMove, SortableElement } from 'react-sortable-hoc';
 import { useServices } from 'src/hooks/use-services';
+import { useState, useEffect } from 'react';
 
 import useSWR from 'swr';
 import { fetcher } from 'src/lib/fetcher';
 import { getYear, getMonth, getDate, getDay } from 'date-fns';
 
 import type { Env } from 'src/types/env';
+import { useEditServices } from 'src/hooks/use-edit-services';
 
 function DateTag() {
 
@@ -32,10 +34,31 @@ function DateTag() {
   );
 }
 
+const SortableBox: any = SortableContainer((props:any) => {
+  return <section className="mt-5 p-4 w-full rd-2 dark:bg-dark-box-background bg-box-background">{props.children}</section>;
+});
+
+const SortableCard = SortableElement((props: React.ComponentProps<typeof ServiceCard>) => {
+  return <ServiceCard {...props} />;
+});
+
 export default function DataCenter() {
   const { servicesData } = useServices();
+  const { handleUpdateServices } = useEditServices();
   // docker 动态加载 env
   const { data } = useSWR<Env>('/api/env', fetcher);
+  const [services, setServices] = useState(servicesData || []);
+
+  const onSortEnd = ({ oldIndex, newIndex }: any) => {
+    setServices(arrayMove(services, oldIndex, newIndex));
+  };
+
+  useEffect(() => {
+    if (services.length === 0 || !servicesData || servicesData.length === 0) return;
+    if (JSON.stringify(services) !== JSON.stringify(servicesData))
+      handleUpdateServices(services);
+  }, [handleUpdateServices, services, servicesData]);
+
   return (
     <div className="min-h-100vh pt-70px px-4 max-w-5xl mx-auto relative pb-70">
       <div className="flex justify-between items-center min-h-14">
@@ -47,7 +70,22 @@ export default function DataCenter() {
           <Hitokoto />
         </div>
       </div>
-      <section className="mt-5 p-4 w-full rd-2 dark:bg-dark-box-background bg-box-background">
+      <SortableBox
+        axis="xy"
+        onSortEnd={onSortEnd}>
+        {
+          (servicesData && servicesData.length !== 0)
+            ? (
+              <div className="grid grid-cols-4 lt-md:grid-cols-2 ">
+                {services.map((service, index) => <SortableCard index={index} {...service} key={service.name} />)}
+              </div>
+            )
+            : (
+              <Loading />
+            )
+        }
+      </SortableBox>
+      {/* <section className="mt-5 p-4 w-full rd-2 dark:bg-dark-box-background bg-box-background">
         {
           (servicesData && servicesData.length !== 0)
             ? (
@@ -59,7 +97,7 @@ export default function DataCenter() {
               <Loading />
             )
         }
-      </section>
+      </section> */}
       <Footer />
     </div>
   );
