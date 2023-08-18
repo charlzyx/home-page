@@ -7,8 +7,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml ./
-RUN yarn global add pnpm --registry=https://registry.npmmirror.com/ && pnpm i --no-frozen-lockfile --registry=https://registry.npmmirror.com/
+COPY package.json ./
+RUN yarn --registry=https://registry.npmmirror.com/
 
 # Rebuild the source code only when needed
 FROM base AS builder
