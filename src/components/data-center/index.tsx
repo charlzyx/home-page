@@ -50,13 +50,15 @@ export default function DataCenter() {
   const [services, setServices] = useState(servicesData || []);
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
-    setServices(arrayMove(services, oldIndex, newIndex));
+    const neo = arrayMove(services, oldIndex, newIndex);
+    setServices(neo);
+    handleUpdateServices(services);
   };
 
   useEffect(() => {
-    if (services.length === 0 || !servicesData || servicesData.length === 0) return;
+    if (!servicesData || servicesData.length === 0) return;
     if (JSON.stringify(services) !== JSON.stringify(servicesData))
-      handleUpdateServices(services);
+      setServices(servicesData);
   }, [handleUpdateServices, services, servicesData]);
 
   return (
