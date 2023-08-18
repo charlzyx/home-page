@@ -9,7 +9,8 @@ services:
       - NEXT_PUBLIC_HOME_TITLE=六六の家
     volumes:
       - ./services.json:/app/services.json
-      - /titan:/titan
+      - /cloud:/cloud
+      - /space:/space
     ports:
       - 3000:3000
     restart: unless-stopped
