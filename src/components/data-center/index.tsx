@@ -5,7 +5,7 @@ import Hitokoto from '../hitokoto';
 import ServiceCard from '../service-card';
 import { SortableContainer, arrayMove, SortableElement } from 'react-sortable-hoc';
 import { useServices } from 'src/hooks/use-services';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 import useSWR from 'swr';
 import { fetcher } from 'src/lib/fetcher';
@@ -44,7 +44,7 @@ const SortableCard = SortableElement((props: React.ComponentProps<typeof Service
 
 export default function DataCenter() {
   const { servicesData, update } = useServices();
-  const { handleUpdateServices } = useEditServices();
+  const { isEdit, handleUpdateServices } = useEditServices();
   // docker 动态加载 env
   const { data } = useSWR<Env>('/api/env', fetcher);
   const [services, setServices] = useState(servicesData || []);
@@ -67,6 +67,10 @@ export default function DataCenter() {
       setServices(servicesData);
   }, [handleUpdateServices, services, servicesData]);
 
+  const Card = useMemo(() => {
+    return isEdit ? SortableCard : ServiceCard;
+  }, [isEdit]);
+
   return (
     <div className="min-h-100vh pt-70px px-4 max-w-5xl mx-auto relative pb-70">
       <div className="flex justify-between items-center min-h-14">
@@ -85,7 +89,7 @@ export default function DataCenter() {
           (servicesData && servicesData.length !== 0)
             ? (
               <div className="grid grid-cols-4 lt-md:grid-cols-2 ">
-                {services.map((service, index) => <SortableCard index={index} {...service} key={service.name} />)}
+                {services.map((service, index) => <Card index={index} {...service} key={service.name} />)}
               </div>
             )
             : (

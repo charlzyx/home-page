@@ -7,6 +7,13 @@
     "oldName": "alist"
   },
   {
+    "name": "网关Gateway",
+    "description": "ADB/DHCP/DNS",
+    "path": "http://adg.home.com",
+    "icon": "security",
+    "oldName": "网关Gateway"
+  },
+  {
     "name": "xunlei",
     "description": "迅雷NAS版",
     "icon": "lightning",
@@ -40,13 +47,6 @@
     "icon": "container-registry",
     "path": "http://docker.home.com",
     "oldName": "Docker"
-  },
-  {
-    "name": "网关Gateway",
-    "description": "ADB/DHCP/DNS",
-    "path": "http://adg.home.com",
-    "icon": "security",
-    "oldName": "网关Gateway"
   },
   {
     "name": "sftpgo",
