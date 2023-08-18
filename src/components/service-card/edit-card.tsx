@@ -20,7 +20,7 @@ export default function EditCard(props: Service) {
 
   return (
     <>
-      <div onClick={() => setVisible(true)} className={`absolute top-7 left-2 i-carbon-edit transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+      <div onClick={() => setVisible(true)} className={`absolute top-7 right-2 i-carbon-edit transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
       <Modal visible={visible} disableBackdropClick>
         <Modal.Title>编辑卡片</Modal.Title>
         <Modal.Subtitle>所有选项都必填</Modal.Subtitle>

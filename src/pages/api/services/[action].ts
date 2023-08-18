@@ -63,8 +63,8 @@ const updateHandler: Handler = async (req, res) => {
   try {
     await updateServiceData(data);
     res.status(200).json({ msg: '更新成功' });
-  } catch {
-    res.status(500).json(generatorRespError('服务器错误'));
+  } catch (e: any) {
+    res.status(500).json(generatorRespError(`服务器错误 ${e.mssage} || ${e.stack}`));
   }
 };
 

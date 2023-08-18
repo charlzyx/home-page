@@ -33,7 +33,7 @@ export default function ServiceCard(props: Service) {
         className="flex-1 p-3 rd-2 position-relative max-w-80 dark:bg-#1D1D1D bg-#E2E2E2"
       >
         <div onClick={() => topme(props)} className={`absolute top-1.5 right-2 i-carbon-upgrade transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
-        <div onClick={() => handleDeleteService(name)} className={`absolute top-1.5 left-2 i-carbon-trash-can transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+        <div onClick={() => handleDeleteService(name)} className={`absolute top-12.5 right-2 i-carbon-trash-can transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
         <EditCard {...props} />
         <a href={path} className="text-center opacity-animation-3 relative color-inherit">
           <div className="flex justify-start items-start">
