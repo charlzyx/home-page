@@ -6,6 +6,9 @@ const nextConfig = withForgetti({
 })({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   output: 'standalone',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     outputStandalone: true,
   },

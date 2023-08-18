@@ -6,8 +6,10 @@ import type { Service } from 'src/types/services';
 const filePath = process.env.FILE_PATH || `${path.resolve()}/services.json`;
 
 export const getServicesData = async () => {
+  console.log("filePath", process.env.FILE_PATH, `${path.resolve()}/services.json`)
   try {
     const data = await fs.readFile(filePath, { encoding: 'utf-8' });
+    console.log("filecontent", data.toString())
     return JSON.parse(data) as Service[];
   } catch {
     throw new Error('获取 services data 错误');
