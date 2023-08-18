@@ -1,7 +1,7 @@
 services:
   home-page:
     container_name: home-page
-    image: home-page
+    build: .
     user: 1000:1000
     environment:
       - TZ=Asia/Shanghai
