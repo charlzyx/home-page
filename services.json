@@ -42,6 +42,13 @@
     "oldName": "Proxmox VE"
   },
   {
+    "name": "PVE DNS",
+    "description": "还是 AdGuardHome",
+    "path": "http://192.168.6.6:5233",
+    "icon": "link",
+    "oldName": "adns"
+  },
+  {
     "name": "Docker",
     "description": "Docker 在线管理",
     "icon": "container-registry",
@@ -68,12 +75,5 @@
     "path": "http://yacd.home.com",
     "icon": "tennis-ball",
     "oldName": "Clash"
-  },
-  {
-    "name": "PVE DNS",
-    "description": "还是 AdGuardHome",
-    "path": "http://192.168.6.6:5233",
-    "icon": "link",
-    "oldName": "adns"
   }
 ]
