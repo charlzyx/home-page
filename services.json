@@ -1,5 +1,19 @@
 [
   {
+    "name": "xunlei",
+    "description": "迅雷NAS版",
+    "icon": "lightning",
+    "path": "http://xl.home.com",
+    "oldName": "NASxunlei"
+  },
+  {
+    "name": "SpeedTest",
+    "description": "LAN网速测试",
+    "path": "http://192.168.6.6:12345",
+    "icon": "meter-alt",
+    "oldName": "SpeedTest"
+  },
+  {
     "name": "Proxmox VE",
     "description": " PVE 管理后台",
     "icon": "terminal",
@@ -21,13 +35,6 @@
     "oldName": "Clash"
   },
   {
-    "name": "xunlei",
-    "description": "迅雷NAS版",
-    "icon": "lightning",
-    "path": "http://xl.home.com",
-    "oldName": "NASxunlei"
-  },
-  {
     "name": "jellyfin",
     "description": "来看电视吧",
     "icon": "play",
@@ -47,13 +54,6 @@
     "path": "http://adg.home.com",
     "icon": "security",
     "oldName": "网关Gateway"
-  },
-  {
-    "name": "SpeedTest",
-    "description": "LAN网速测试",
-    "path": "http://192.168.6.6:12345",
-    "icon": "meter-alt",
-    "oldName": "SpeedTest"
   },
   {
     "name": "sftpgo",
