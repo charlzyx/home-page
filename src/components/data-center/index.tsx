@@ -83,7 +83,7 @@ export default function DataCenter() {
         </div>
       </div>
       <SortableBox
-        distance={1}
+        distance={10}
         axis="xy"
         onSortEnd={onSortEnd}>
         {
