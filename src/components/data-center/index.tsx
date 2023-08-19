@@ -68,7 +68,7 @@ export default function DataCenter() {
   }, [handleUpdateServices, services, servicesData]);
 
   const Card = useMemo(() => {
-    return isEdit ? SortableCard : ServiceCard;
+    return !isEdit ? SortableCard : ServiceCard;
   }, [isEdit]);
 
   return (
