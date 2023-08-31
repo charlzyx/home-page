@@ -8,7 +8,7 @@ import { useEditServices } from 'src/hooks/use-edit-services';
 import type { Service } from 'src/types/services';
 
 export default function AddService(props: { groupName: string }) {
-  const { isEdit, handleAddService: handlerAddService, toggleEditMode } = useEditServices();
+  const { isEdit, handleAddService: handlerAddService } = useEditServices();
   const { setVisible, visible } = useModal(false);
 
   const [service, setService] = useState<Service & { groupName: string }>({

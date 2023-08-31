@@ -14,7 +14,6 @@ export default function Options() {
   const [group, setGroup] = useState<ServiceGroup>({
     name: '',
     icon: '',
-    zip: true,
     services: []
   });
 
