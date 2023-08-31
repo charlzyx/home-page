@@ -3,7 +3,7 @@ import { useToasts } from '@geist-ui/core';
 
 import { calcAccessTokenExpires, useOnedriveData } from './use-onedrive-data';
 import { useEditServices } from './use-edit-services';
-import type { Service } from 'src/types/services';
+import type { Service, ServiceGroup } from 'src/types/services';
 
 import { HTTPError, fetcherWithAuthorization } from 'src/lib/fetcher';
 import { CLIENT_ID, CLIENT_SECRET } from 'src/lib/constant';
@@ -79,7 +79,7 @@ export const useOnedrive = () => {
     return requestTokenHandler(`code=${onedriveData.authCode}`);
   };
 
-  const handleUpload = async (services: Service[] | undefined) => {
+  const handleUpload = async (services: ServiceGroup[] | undefined) => {
     setIsUploading(true);
     const token = await getToken();
 

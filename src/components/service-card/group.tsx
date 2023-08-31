@@ -12,7 +12,6 @@ import { useAtomValue } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import type { ServiceGroup } from 'src/types/services';
 import { useServices } from 'src/hooks/use-services';
-import { group } from 'console';
 
 export const serviceNameUpperAtom = atomWithStorage<boolean>('home-page-service-name-upper', true);
 
