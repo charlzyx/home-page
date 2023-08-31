@@ -3,7 +3,7 @@ import { useToasts } from '@geist-ui/core';
 
 import { calcAccessTokenExpires, useOnedriveData } from './use-onedrive-data';
 import { useEditServices } from './use-edit-services';
-import type { Service, ServiceGroup } from 'src/types/services';
+import type { ServiceGroup } from 'src/types/services';
 
 import { HTTPError, fetcherWithAuthorization } from 'src/lib/fetcher';
 import { CLIENT_ID, CLIENT_SECRET } from 'src/lib/constant';
@@ -123,7 +123,7 @@ export const useOnedrive = () => {
     }
 
     try {
-      const data = await fetcherWithAuthorization<Service[]>([encodeURIComponent('root:/services.json:/content'), token], { method: 'GET' });
+      const data = await fetcherWithAuthorization<ServiceGroup[]>([encodeURIComponent('root:/services.json:/content'), token], { method: 'GET' });
       handleUpdateServices(data);
 
       setIsSyncing(false);
