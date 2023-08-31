@@ -15,11 +15,11 @@ export default function Footer() {
         </div>
         <div className="text-right dark:op-60">
           <div className="custom-bg" />
-          <p className="mt-2 flex align-center">
+          <div className="mt-2 flex align-center">
             <div className="i-carbon:bat text-4 mr-3 mt-1" />
             <Link>
               Nothing to fear. </Link>
-          </p>
+          </div>
           {/* <span className="op-100">©&nbsp;{getYear(new Date())} </span>
           PowerBy&nbsp;
           <Link href="https://https://nextjs.org/">Next.js</Link>  */}

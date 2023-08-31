@@ -5,7 +5,7 @@ import { useServices } from './use-services';
 
 import { validateFormDataForService } from 'src/lib/utils';
 
-import type { Service } from 'src/types/services';
+import type { Service, ServiceGroup } from 'src/types/services';
 
 export const isEditAtom = atom(false);
 
@@ -27,8 +27,75 @@ export const useEditServices = () => {
       console.error(e);
     }
   };
+  const handleAddServiceGroup = async (group: ServiceGroup, closeModal: () => void) => {
+    // validate data
 
-  const handlerAddService = async (service: Service | undefined, closeModal: () => void) => {
+    try {
+      const res = await fetch('/api/services/addgroup', { method: 'POST', body: JSON.stringify(group) });
+      const data = await res.json();
+
+      if (!res.ok)
+        throw new Error(data.msg);
+
+      closeModal();
+      // refetch data
+      update();
+
+      setToast({
+        text: data.msg,
+        delay: 4000
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  const handleEditServiceGroup = async (group: ServiceGroup & { oldGroupName: string }, closeModal?: () => void) => {
+    // validate data
+
+    try {
+      const res = await fetch('/api/services/editgroup', { method: 'POST', body: JSON.stringify(group) });
+      const data = await res.json();
+
+      if (!res.ok)
+        throw new Error(data.msg);
+
+      closeModal?.();
+      // refetch data
+      update();
+
+      setToast({
+        text: data.msg,
+        delay: 4000
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  const handleDeleteServiceGroup = async (groupName: string) => {
+    // validate data
+
+    try {
+      const res = await fetch('/api/services/deletegroup', { method: 'POST', body: groupName });
+      const data = await res.json();
+
+      if (!res.ok)
+        throw new Error(data.msg);
+
+      // refetch data
+      update();
+
+      setToast({
+        text: data.msg,
+        delay: 4000
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  };
+
+  const handleAddService = async (service: Service & { groupName: string } | undefined, closeModal: () => void) => {
     // validate data
     const error = validateFormDataForService(service);
 
@@ -61,9 +128,9 @@ export const useEditServices = () => {
     }
   };
 
-  const handleDeleteService = async (targetName: string) => {
+  const handleDeleteService = async (targetName: string, groupName: string) => {
     try {
-      const res = await fetch('/api/services/delete', { method: 'POST', body: targetName });
+      const res = await fetch('/api/services/delete', { method: 'POST', body: JSON.stringify({ targetName, groupName }) });
       const data = await res.json();
 
       if (!res.ok)
@@ -80,7 +147,7 @@ export const useEditServices = () => {
     }
   };
 
-  const handleEditService = async (service: Service & { oldName: string }, closeModal: () => void) => {
+  const handleEditService = async (service: Service & { oldName: string; groupName: string }, closeModal: () => void) => {
     // validate data
     const result = validateFormDataForService(service);
 
@@ -131,8 +198,11 @@ export const useEditServices = () => {
   return {
     isEdit,
     toggleEditMode,
+    handleAddServiceGroup,
+    handleDeleteServiceGroup,
+    handleEditServiceGroup,
     handleDeleteService,
-    handlerAddService,
+    handleAddService,
     handleEditService,
     handleUpdateServices
   };

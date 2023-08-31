@@ -3,38 +3,33 @@ import { Input, Modal, Spacer, useModal } from '@geist-ui/core';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
-import Link from '../link';
 import { useEditServices } from 'src/hooks/use-edit-services';
-import type { Service } from 'src/types/services';
+import type { ServiceGroup } from 'src/types/services';
+import Link from '../link';
 
 export default function Options() {
-  const { isEdit, handlerAddService, toggleEditMode } = useEditServices();
+  const { isEdit, handleAddServiceGroup, toggleEditMode } = useEditServices();
   const { setVisible, visible } = useModal(false);
 
-  const [service, setService] = useState<Service>({
+  const [group, setGroup] = useState<ServiceGroup>({
     name: '',
-    description: '',
-    path: '',
-    icon: ''
+    icon: '',
+    services: []
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, key: keyof Service) => {
-    setService(s => ({ ...s, [key]: e.target.value }));
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, key: keyof ServiceGroup) => {
+    setGroup(s => ({ ...s, [key]: e.target.value }));
   };
 
   return (
     <>
-      <div onClick={() => setVisible(true)} className={`${isEdit ? 'visible op-100' : 'invisible op-0'} transition-all i-carbon-task-add text-5 mr-3 cursor-pointer opacity-animation-3`} />
+      <div onClick={() => setVisible(true)} className={`${isEdit ? 'visible op-100' : 'invisible op-0'} transition-all i-carbon-bookmark-add text-5 mr-3 cursor-pointer opacity-animation-3`} />
       <div onClick={() => toggleEditMode()} className={`${isEdit ? 'i-carbon-edit-off' : 'i-carbon-edit'} text-5 cursor-pointer icon-tap-color mr-3 opacity-animation-3 `} />
       <Modal visible={visible} disableBackdropClick>
-        <Modal.Title>添加卡片</Modal.Title>
+        <Modal.Title>添加分组</Modal.Title>
         <Modal.Subtitle>所有选项都必填</Modal.Subtitle>
         <Modal.Content className="!mx-auto">
           <Input label="名称" onChange={e => handleChange(e, 'name')} />
-          <Spacer />
-          <Input label="描述" onChange={e => handleChange(e, 'description')} />
-          <Spacer />
-          <Input label="路径" onChange={e => handleChange(e, 'path')} />
           <Spacer />
           <Input label="图标" onChange={e => handleChange(e, 'icon')} />
           <div className="text-center text-sm mt-2">
@@ -44,7 +39,7 @@ export default function Options() {
         </Modal.Content>
         <Modal.Action passive onClick={() => setVisible(false)}>取消</Modal.Action>
         <Modal.Action onClick={() => {
-          handlerAddService(service, () => setVisible(false));
+          handleAddServiceGroup(group, () => setVisible(false));
         }}>提交</Modal.Action>
       </Modal>
     </>

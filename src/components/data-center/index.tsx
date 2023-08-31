@@ -1,18 +1,15 @@
 import { Loading } from '@geist-ui/core';
 
+import { useServices } from 'src/hooks/use-services';
 import Footer from '../footer';
 import Hitokoto from '../hitokoto';
-import ServiceCard from '../service-card';
-import { SortableContainer, arrayMove, SortableElement } from 'react-sortable-hoc';
-import { useServices } from 'src/hooks/use-services';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import GroupCard from '../service-card/group';
 
-import useSWR from 'swr';
+import { getDate, getDay, getMonth, getYear } from 'date-fns';
 import { fetcher } from 'src/lib/fetcher';
-import { getYear, getMonth, getDate, getDay } from 'date-fns';
+import useSWR from 'swr';
 
 import type { Env } from 'src/types/env';
-import { useEditServices } from 'src/hooks/use-edit-services';
 
 function DateTag() {
 
@@ -34,42 +31,10 @@ function DateTag() {
   );
 }
 
-const SortableBox: any = SortableContainer((props:any) => {
-  return <section className="mt-5 p-4 w-full rd-2 dark:bg-dark-box-background bg-box-background">{props.children}</section>;
-});
-
-const SortableCard = SortableElement((props: React.ComponentProps<typeof ServiceCard>) => {
-  return <ServiceCard {...props} />;
-});
-
 export default function DataCenter() {
-  const { servicesData, update } = useServices();
-  const { isEdit, handleUpdateServices } = useEditServices();
+  const { servicesData } = useServices();
   // docker 动态加载 env
   const { data } = useSWR<Env>('/api/env', fetcher);
-  const [services, setServices] = useState(servicesData || []);
-  const updating = useRef(false);
-
-  const onSortEnd = ({ oldIndex, newIndex }: any) => {
-    const neo = arrayMove(services, oldIndex, newIndex);
-    setServices(neo);
-    updating.current = true;
-    handleUpdateServices(neo).then(update).finally(() => {
-      setTimeout(() => {
-        updating.current = false;
-      }, 300);
-    });
-  };
-
-  useEffect(() => {
-    if (updating.current || !servicesData || servicesData.length === 0) return;
-    if (JSON.stringify(services) !== JSON.stringify(servicesData))
-      setServices(servicesData);
-  }, [handleUpdateServices, services, servicesData]);
-
-  const Card = useMemo(() => {
-    return isEdit ? SortableCard : ServiceCard;
-  }, [isEdit]);
 
   return (
     <div className="min-h-100vh pt-70px px-4 max-w-5xl mx-auto relative pb-70">
@@ -82,35 +47,14 @@ export default function DataCenter() {
           <Hitokoto />
         </div>
       </div>
-      <SortableBox
-        distance={1}
-        axis="xy"
-        onSortEnd={onSortEnd}>
-        {
-          (servicesData && servicesData.length !== 0)
-            ? (
-              <div className="grid grid-cols-4 lt-md:grid-cols-2 ">
-                {services.map((service, index) => <Card index={index} {...service} key={service.name} />)}
-              </div>
-            )
-            : (
-              <Loading />
-            )
-        }
-      </SortableBox>
-      {/* <section className="mt-5 p-4 w-full rd-2 dark:bg-dark-box-background bg-box-background">
-        {
-          (servicesData && servicesData.length !== 0)
-            ? (
-              <div className="grid grid-cols-4 lt-md:grid-cols-2 ">
-                {servicesData.map(service => <ServiceCard {...service} key={service.name} />)}
-              </div>
-            )
-            : (
-              <Loading />
-            )
-        }
-      </section> */}
+      <div className="flex flex-col">
+        {servicesData && servicesData.length !== 0 ? (
+          <div>
+            {servicesData.map((group) => <GroupCard {...group} key={group.name} />)}
+          </div>
+        )
+          : <Loading />}
+      </div>
       <Footer />
     </div>
   );

@@ -35,3 +35,13 @@ a {
   background-size: contain;
   margin-bottom: 0.875rem;
 }
+.groupgroup .collspan {
+  margin: 0;
+  padding: 0;
+}
+.groupgroup .title {
+  /* background: red; */
+}
+.groupgroup .title> h3 {
+  flex: 1;
+}

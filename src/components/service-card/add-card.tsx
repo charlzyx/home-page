@@ -4,15 +4,20 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import Link from '../link';
-
 import { useEditServices } from 'src/hooks/use-edit-services';
 import type { Service } from 'src/types/services';
 
-export default function EditCard(props: Service & { groupName: string }) {
-  const { isEdit, handleEditService } = useEditServices();
-  const { visible, setVisible } = useModal(false);
+export default function AddService(props: { groupName: string }) {
+  const { isEdit, handleAddService: handlerAddService, toggleEditMode } = useEditServices();
+  const { setVisible, visible } = useModal(false);
 
-  const [service, setService] = useState<Service & { oldName: string; groupName: string }>({ ...props, oldName: props.name, groupName: props.groupName });
+  const [service, setService] = useState<Service & { groupName: string }>({
+    name: '',
+    description: '',
+    path: '',
+    icon: '',
+    groupName: props.groupName
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, key: keyof Service) => {
     setService(s => ({ ...s, [key]: e.target.value }));
@@ -20,18 +25,18 @@ export default function EditCard(props: Service & { groupName: string }) {
 
   return (
     <>
-      <div onClick={() => setVisible(true)} className={`absolute top-7 right-2 i-carbon-edit transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+      <div onClick={() => setVisible(true)} className={`${isEdit ? 'visible op-100' : 'invisible op-0'} transition-all i-carbon-task-add  cursor-pointer opacity-animation-3`} />
       <Modal visible={visible} disableBackdropClick>
-        <Modal.Title>编辑卡片</Modal.Title>
+        <Modal.Title>添加卡片到「{props.groupName}」</Modal.Title>
         <Modal.Subtitle>所有选项都必填</Modal.Subtitle>
         <Modal.Content className="!mx-auto">
-          <Input label="名称" value={service.name} onChange={e => handleChange(e, 'name')} />
+          <Input label="名称" onChange={e => handleChange(e, 'name')} />
           <Spacer />
-          <Input label="描述" value={service.description} onChange={e => handleChange(e, 'description')} />
+          <Input label="描述" onChange={e => handleChange(e, 'description')} />
           <Spacer />
-          <Input label="路径" value={service.path} onChange={e => handleChange(e, 'path')} />
+          <Input label="路径" onChange={e => handleChange(e, 'path')} />
           <Spacer />
-          <Input label="图标" value={service.icon} onChange={e => handleChange(e, 'icon')} />
+          <Input label="图标" onChange={e => handleChange(e, 'icon')} />
           <div className="text-center text-sm mt-2">
             Tip:
             <Link href="https://icones.js.org/collection/carbon" target="_blank">跳转到选择图标的页面</Link>
@@ -39,7 +44,7 @@ export default function EditCard(props: Service & { groupName: string }) {
         </Modal.Content>
         <Modal.Action passive onClick={() => setVisible(false)}>取消</Modal.Action>
         <Modal.Action onClick={() => {
-          handleEditService(service, () => setVisible(false));
+          handlerAddService(service, () => setVisible(false));
         }}>提交</Modal.Action>
       </Modal>
     </>
