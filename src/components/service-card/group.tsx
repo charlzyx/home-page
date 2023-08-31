@@ -16,8 +16,8 @@ import { useServices } from 'src/hooks/use-services';
 export const serviceNameUpperAtom = atomWithStorage<boolean>('home-page-service-name-upper', true);
 
 export default function GroupCard(props: ServiceGroup) {
-  const { isEdit, handleDeleteServiceGroup, handleEditServiceGroup } = useEditServices();
-  const { update } = useServices();
+  const { isEdit, handleDeleteServiceGroup, handleUpdateServices, handleEditServiceGroup } = useEditServices();
+  const { update, servicesData } = useServices();
   const isUpper = useAtomValue(serviceNameUpperAtom);
   const [services, setServices] = useState(props.services || []);
 
@@ -35,15 +35,23 @@ export default function GroupCard(props: ServiceGroup) {
     handleEditServiceGroup({
       ...props, services: neo,
       oldGroupName: props.name
-    }).then(update).finally(() => {
+    }, true).then(update).finally(() => {
       setTimeout(() => {
         updating.current = false;
       }, 300);
     });
   };
+  const move = (to: 'up' | 'down') => {
+    if (!servicesData) return;
+    const current = servicesData.findIndex(x => x.name === props.name);
+    if (!current) return;
+    const next = to === 'up' ? Math.max(current - 1, 0) : Math.min(current + 1, servicesData.length);
+    const neoData = arrayMove(servicesData, current, next);
+    handleUpdateServices(neoData);
+  };
 
   const SortableBox: any = useMemo(() => SortableContainer((props:any) => {
-    return <section className="mt-0 p-2 w-full rd-2 dark:bg-dark-box-background bg-box-background">{props.children}</section>;
+    return <section className="mt-0 p-2 w-full rd-2">{props.children}</section>;
   }), []);
 
   const SortableCard = useMemo(() => SortableElement((props: React.ComponentProps<typeof ServiceCard>) => {
@@ -62,7 +70,7 @@ export default function GroupCard(props: ServiceGroup) {
       ...props,
       oldGroupName: props.name,
       zip: neo
-    }).then(update);
+    }, true).then(update);
   }, [handleEditServiceGroup, props, update]);
 
   return (
@@ -74,7 +82,7 @@ export default function GroupCard(props: ServiceGroup) {
           <div className="flex flex-row justify-between align-center">
             <div className="flex justify-start items-start">
               <div className={`i-carbon-${safeIcon} text-2xl mr-2`} />
-              <p className="position-relative ml--2 link text-4 ">{isUpper ? name.toUpperCase() : name}</p>
+              <p className="position-relative ml-2 link text-4 ">{isUpper ? name.toUpperCase() : name}</p>
             </div>
             <div className="flex flex-1  text-4.5 justify-end items-center mr-8 ">
               <ServiceAdd groupName={props.name} />
@@ -82,6 +90,11 @@ export default function GroupCard(props: ServiceGroup) {
               <EditGroup {...props} />
               <Spacer />
               <div onClick={() => handleDeleteServiceGroup(name)} className={`i-carbon-trash-can transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+              <Spacer />
+              <div onClick={() => move('up')} className={`i-carbon-arrow-up transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+              <Spacer />
+              <div onClick={() => move('down')} className={`i-carbon-arrow-down transition-all ${isEdit ? 'visible op-100' : 'invisible op-0'} cursor-pointer z999`} />
+
             </div>
           </div> as any
         }

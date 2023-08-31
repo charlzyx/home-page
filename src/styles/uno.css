@@ -2139,7 +2139,7 @@
 .mb-0{margin-bottom:0;}
 .mb-3{margin-bottom:0.75rem;}
 .mb-4{margin-bottom:1rem;}
-.ml--2{margin-left:-0.5rem;}
+.ml-2{margin-left:0.5rem;}
 .ml-4px{margin-left:4px;}
 .mr-2{margin-right:0.5rem;}
 .mr-3{margin-right:0.75rem;}
@@ -2181,10 +2181,8 @@
 .border-none\!{border-style:none !important;}
 .border-b-style-solid{border-bottom-style:solid;}
 .bg-\#E2E2E2{--un-bg-opacity:1;background-color:rgba(226,226,226,var(--un-bg-opacity));}
-.bg-box-background{--un-bg-opacity:1;background-color:rgba(233,234,233,var(--un-bg-opacity));}
 .dark .\!dark\:bg-\#1D1D1D{--un-bg-opacity:1 !important;background-color:rgba(29,29,29,var(--un-bg-opacity)) !important;}
 .dark .dark\:bg-\#1D1D1D{--un-bg-opacity:1;background-color:rgba(29,29,29,var(--un-bg-opacity));}
-.dark .dark\:bg-dark-box-background{--un-bg-opacity:1;background-color:rgba(19,19,19,var(--un-bg-opacity));}
 .p-0{padding:0;}
 .p-2{padding:0.5rem;}
 .p-3{padding:0.75rem;}

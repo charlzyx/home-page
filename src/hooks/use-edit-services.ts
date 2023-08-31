@@ -50,7 +50,7 @@ export const useEditServices = () => {
     }
   };
 
-  const handleEditServiceGroup = async (group: ServiceGroup & { oldGroupName: string }, closeModal?: () => void) => {
+  const handleEditServiceGroup = async (group: ServiceGroup & { oldGroupName: string }, slient?: boolean, closeModal?: () => void) => {
     // validate data
 
     try {
@@ -64,10 +64,13 @@ export const useEditServices = () => {
       // refetch data
       update();
 
-      setToast({
-        text: data.msg,
-        delay: 4000
-      });
+      if (!slient) {
+        setToast({
+          text: data.msg,
+          delay: 4000
+        });
+      }
+
     } catch (e) {
       errorHandler(e);
     }
@@ -180,7 +183,7 @@ export const useEditServices = () => {
     }
   };
 
-  const handleUpdateServices = async (services: Service[]) => {
+  const handleUpdateServices = async (services: ServiceGroup[]) => {
     try {
       const res = await fetch('/api/services/update', { method: 'POST', body: JSON.stringify(services) });
       const data = await res.json();

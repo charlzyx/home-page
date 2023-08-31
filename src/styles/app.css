@@ -39,9 +39,9 @@ a {
   margin: 0;
   padding: 0;
 }
-.groupgroup .title {
-  /* background: red; */
+.groupgroup .content {
+  padding: 0 !important;
 }
-.groupgroup .title> h3 {
+.groupgroup  .title> h3 {
   flex: 1;
 }

@@ -35,7 +35,7 @@ export default function EditGroup(props: ServiceGroup) {
         </Modal.Content>
         <Modal.Action passive onClick={() => setVisible(false)}>取消</Modal.Action>
         <Modal.Action onClick={() => {
-          handleEditServiceGroup(group, () => setVisible(false));
+          handleEditServiceGroup(group, false, () => setVisible(false));
         }}>提交</Modal.Action>
       </Modal>
     </>

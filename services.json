@@ -1,5 +1,37 @@
 [
   {
+    "name": "冲浪",
+    "icon": "cloud",
+    "zip": true,
+    "services": [
+      {
+        "name": "Clash",
+        "description": ".2 出海海淘淘气",
+        "path": "http://yacd.home.com/ui",
+        "icon": "tennis-ball"
+      },
+      {
+        "name": "TP-Link",
+        "description": "tplogin.cn",
+        "path": "http://tplogin.cn",
+        "icon": "wifi"
+      },
+      {
+        "name": "iKuai",
+        "description": ".1 爱快路由",
+        "path": "http://ikuai.home.com",
+        "icon": "wifi-controller"
+      },
+      {
+        "name": "Lan.Speed",
+        "description": ".5 你能追得上我的斯皮德吗",
+        "path": "http://sp.home.com",
+        "icon": "meter-alt"
+      }
+    ],
+    "oldGroupName": "冲浪"
+  },
+  {
     "name": "管理后台",
     "icon": "terminal",
     "zip": true,
@@ -22,43 +54,8 @@
         "path": "http://adg.home.com",
         "icon": "security"
       }
-    ]
-  },
-  {
-    "name": "冲浪",
-    "icon": "cloud",
-    "zip": true,
-    "services": [
-      {
-        "name": "Clash",
-        "description": ".2 出海海淘淘气",
-        "path": "http://yacd.home.com/ui",
-        "icon": "tennis-ball"
-      },
-
-      {
-        "name": "TP-Link",
-        "description": "tplogin.cn",
-        "path": "http://tplogin.cn",
-        "icon": "wifi"
-      },
-
-      {
-        "name": "iKuai",
-        "description": ".1 爱快路由",
-        "path": "http://ikuai.home.com",
-        "icon": "wifi-controller"
-      },
-
-
-      {
-        "name": "Lan.Speed",
-        "description": ".5 你能追得上我的斯皮德吗",
-        "path": "http://sp.home.com",
-        "icon": "meter-alt"
-      }
-
-    ]
+    ],
+    "oldGroupName": "管理后台"
   },
   {
     "name": "App Store",
@@ -77,7 +74,8 @@
         "icon": "play",
         "path": "http://tv.home.com"
       }
-    ]
+    ],
+    "oldGroupName": "App Store"
   },
   {
     "name": "网盘",
@@ -120,8 +118,7 @@
     "name": "IPv6",
     "icon": "cloud",
     "zip": true,
-    "services": [
-    ]
+    "services": []
   },
   {
     "name": "OutLook",
@@ -136,5 +133,4 @@
       }
     ]
   }
-
 ]
