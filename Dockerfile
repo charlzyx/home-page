@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json ./
-RUN yarn --registry=https://registry.npmmirror.com/
+RUN yarn
 
 # Rebuild the source code only when needed
 FROM base AS builder
