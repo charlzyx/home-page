@@ -23,7 +23,7 @@ export const addServiceGroup = async (group: Partial<ServiceGroup>) => {
 
 export const deleteServiceGroup = async (groupName: string) => {
   const servicesData = await getServicesData();
-  const newData = servicesData.filter(item => item.name === groupName);
+  const newData = servicesData.filter(item => item.name !== groupName);
   await fs.writeFile(filePath, JSON.stringify(newData, null, 2));
 };
 
