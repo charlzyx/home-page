@@ -12,7 +12,15 @@
 
 <p align="center">一个简洁的 NAS 主页 & 导航页</p>
 
-## 使用方法
+## docker 部署
+
+```bash
+# NEXT_PUBLIC_HOME_TITLE="内容标题"
+# NEXT_PUBLIC_HOME_HEADER_TITLE="顶部标题"
+docker run -d -p 3000:3000 -v ./conf:/app/conf chaogpt/home-page
+```
+
+## 源码部署
 
 clone 本项目到你要部署的机器上
 

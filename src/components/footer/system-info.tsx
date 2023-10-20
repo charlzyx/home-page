@@ -1,8 +1,8 @@
-import useSWR from 'swr';
+import useSWR from "swr";
 
-import { fetcher } from 'src/lib/fetcher';
+import { fetcher } from "src/lib/fetcher";
 // import type { MemoryInfoResponse, CpuInfoResponse, FullInfoResponse } from 'src/types/system';
-import type { FullInfoResponse } from 'src/types/system';
+import type { FullInfoResponse } from "src/types/system";
 
 // function CpuInfo() {
 //   const { data, error } = useSWR<CpuInfoResponse>('/api/system/cpuinfo', fetcher, { refreshInterval: 1000 });
@@ -28,7 +28,7 @@ import type { FullInfoResponse } from 'src/types/system';
 //   );
 // }
 
-const units = ['b', 'KB', 'MB', 'GB', 'TB'];
+const units = ["b", "KB", "MB", "GB", "TB"];
 const readable = (x: number, toFixed = 2) => {
   let n = x;
 
@@ -41,8 +41,8 @@ const readable = (x: number, toFixed = 2) => {
 };
 
 export default function SystemIno() {
-  const { data, error } = useSWR<FullInfoResponse>('/api/system/all', fetcher, {
-    refreshInterval: 6666
+  const { data, error } = useSWR<FullInfoResponse>("/api/system/all", fetcher, {
+    refreshInterval: 6666,
   });
   if (error || !data) return null;
   const { cpu, system, mem, fs } = data;
@@ -64,7 +64,7 @@ export default function SystemIno() {
         </div>
       </div>
 
-      <div className="flex items-top">
+      {/* <div className="flex items-top">
         <div className="i-carbon:data-base text-4 mr-3" />
         <div>
           {fs
@@ -78,7 +78,7 @@ export default function SystemIno() {
               );
             })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

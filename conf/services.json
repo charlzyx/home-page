@@ -1,0 +1,60 @@
+[
+  {
+    "icon": "home",
+    "name": "在家啊",
+    "oldGroupName": "在家啊",
+    "services": [
+      {
+        "description": "Clash",
+        "icon": "tennis-ball",
+        "name": "Clash",
+        "path": "http://10.5.6.1:9999/ui"
+      },
+      {
+        "description": "xiaomi.wifi",
+        "icon": "wifi-controller",
+        "name": "小米路由器",
+        "path": "http://10.5.6.1"
+      },
+      {
+        "description": "FnOS",
+        "icon": "terminal",
+        "name": "FnOS.Local",
+        "path": "http://10.5.6.3"
+      },
+      {
+        "description": "PVE 管理后台",
+        "icon": "terminal",
+        "name": "Proxmox VE",
+        "path": "https://10.5.6.66:8006"
+      },
+      {
+        "description": "PTer",
+        "icon": "download",
+        "name": "transmission",
+        "path": "http://10.5.6.3:9091"
+      }
+    ],
+    "zip": true
+  },
+  {
+    "icon": "terminal",
+    "name": "ChaoGPT.Space",
+    "oldGroupName": "ChaoGPT.Space",
+    "services": [
+      {
+        "description": "DPanel",
+        "icon": "container-registry",
+        "name": "Docker",
+        "path": "https://dpanel.chaogpt.space"
+      },
+      {
+        "description": "FnOS",
+        "icon": "play",
+        "name": "FnOS",
+        "path": "https://fnos.chaogpt.space"
+      }
+    ],
+    "zip": true
+  }
+]
